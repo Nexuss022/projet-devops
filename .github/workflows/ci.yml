@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: DevOps Pipeline
 
 on:
   push:
@@ -6,17 +6,20 @@ on:
       - main
 
 jobs:
-  build:
+  test-and-build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Récupération du code
+      - name: Télécharger le code
         uses: actions/checkout@v3
 
-      - name: Installation PHP
+      - name: Installer PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
 
-      - name: Vérification syntaxe PHP
+      - name: Vérifier syntaxe PHP
         run: php -l index.php
+
+      - name: Construire image Docker
+        run: docker build -t projet-devops .
